@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Tienda Online</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    .productos {
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      padding: 2em;
+      flex-wrap: wrap;
+    }
+    .producto {
+      border: 1px solid #ccc;
+      padding: 1em;
+      text-align: center;
+      max-width: 250px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Mi Tienda Online</h1>
+  </header>
+
+  <section class="productos">
+    <!-- Producto 1 -->
+    <div class="producto">
+      <img src="https://via.placeholder.com/200" alt="Producto 1" />
+      <h3>Producto 1</h3>
+      <p>$20.00</p>
+      <div id="paypal-button-container-1"></div>
+    </div>
+
+    <!-- Producto 2 -->
+    <div class="producto">
+      <img src="https://via.placeholder.com/200" alt="Producto 2" />
+      <h3>Producto 2</h3>
+      <p>$35.00</p>
+      <div id="paypal-button-container-2"></div>
+    </div>
+  </section>
+
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&currency=USD"></script>
+
+  <!-- Botón de pago para Producto 1 -->
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: '20.00' },
+            description: 'Producto 1'
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('¡Gracias por tu compra, ' + details.payer.name.given_name + '!');
+        });
+      }
+    }).render('#paypal-button-container-1');
+  </script>
+
+  <!-- Botón de pago para Producto 2 -->
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: '35.00' },
+            description: 'Producto 2'
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('¡Gracias por tu compra, ' + details.payer.name.given_name + '!');
+        });
+      }
+    }).render('#paypal-button-container-2');
+  </script>
+
+</body>
+</html>
